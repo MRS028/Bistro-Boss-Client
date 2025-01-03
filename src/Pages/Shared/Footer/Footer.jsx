@@ -1,49 +1,51 @@
-import React from "react";
-import { BiFoodMenu } from "react-icons/bi";
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
+import React from 'react';
+import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-6">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        {/* Logo and Description */}
-        <div className="mb-4 md:mb-0 text-center md:text-left">
-          <h1 className="text-lg font-bold"><BiFoodMenu></BiFoodMenu></h1>
-          <p className="text-sm">
-            Crafting solutions to connect the world. © {new Date().getFullYear()}
-          </p>
+    <footer className="bg-gray-800 text-white py-8">
+      <div className='divider'></div>
+      <div className="max-w-screen-xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          {/* Logo/Brand */}
+          <div className="text-center md:text-left mb-4 md:mb-0">
+            <h1 className="text-3xl font-semibold text-orange-500">Bistro Boss</h1>
+            <p className="text-sm text-gray-400">Satisfy your cravings, anytime, anywhere.</p>
+          </div>
+
+          {/* Links */}
+          <div className="flex flex-col md:flex-row md:space-x-8 mb-4 md:mb-0">
+            <a href="#" className="text-sm text-gray-400 hover:text-white">
+              Home
+            </a>
+            <a href="#" className="text-sm text-gray-400 hover:text-white">
+              Menu
+            </a>
+            <a href="#" className="text-sm text-gray-400 hover:text-white">
+              About Us
+            </a>
+            <a href="#" className="text-sm text-gray-400 hover:text-white">
+              Contact
+            </a>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex space-x-6">
+            <a href="#" className="text-gray-400 hover:text-white">
+              <FaFacebook size={24} />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-white">
+              <FaTwitter size={24} />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-white">
+              <FaInstagram size={24} />
+            </a>
+          </div>
         </div>
 
-        {/* Navigation Links */}
-        <div className="flex flex-col md:flex-row text-center md:text-left space-y-2 md:space-y-0 md:space-x-6">
-          <a href="#about" className="hover:underline">
-            About
-          </a>
-          <a href="#services" className="hover:underline">
-            Services
-          </a>
-          <a href="#contact" className="hover:underline">
-            Contact
-          </a>
-          <a href="#privacy" className="hover:underline">
-            Privacy Policy
-          </a>
-        </div>
-
-        {/* Social Media Icons */}
-        <div className="flex space-x-4 mt-4 md:mt-0">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <FaFacebook className="text-lg hover:text-blue-500" />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <FaTwitter className="text-lg hover:text-blue-400" />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="text-lg hover:text-blue-700" />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="text-lg hover:text-pink-500" />
-          </a>
+        {/* Footer Bottom */}
+        <div className="text-center text-sm text-gray-500 mt-6">
+          <p>&copy; 2025 Food Cart. All rights reserved.</p>
         </div>
       </div>
     </footer>

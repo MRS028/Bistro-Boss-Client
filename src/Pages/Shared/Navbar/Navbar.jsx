@@ -7,7 +7,11 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
-      <li><Link to='menu'>Our menu</Link>
+      <li><Link to='menu'>Our menu</Link></li>
+      <li><Link to='order/salad'>Order Food</Link></li>
+        
+        
+        
         {/* <details>
           <summary></summary>
           <ul className="p-2 text-black">
@@ -19,7 +23,7 @@ const Navbar = () => {
             </li>
           </ul>
         </details> */}
-      </li>
+      
       <li>
         <Link to="/auth/login">Login</Link>
       </li>

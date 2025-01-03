@@ -4,6 +4,9 @@ import Cover from "../Shared/Cover/Cover";
 import menuImg from "../../assets/assets/menu/banner3.jpg";
 import dessertImg from "../../assets/assets/menu/dessert-bg.jpeg";
 import pizzaImg from "../../assets/assets/menu/pizza-bg.jpg";
+import saladImg from "../../assets/assets/menu/salad-bg.jpg";
+import soupImg from "../../assets/assets/menu/soup-bg.jpg";
+import offeredImg from "../../assets/assets/menu/menu-bg.png";
 import PopularMenu from "../Home/PopularMenu/PopularMenu";
 import useMenu from "../../Hooks/usemenu";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
@@ -20,7 +23,7 @@ const Menue = () => {
   return (
     <div className="pt-20  mx-auto">
       <Helmet>
-        <title>Bistro Menu</title>
+        <title>Bistro Boss | Menu</title>
         <link rel="canonical" href="https://www.tacobell.com/" />
       </Helmet>
       <Cover img={menuImg} title="Our Menu"></Cover>
@@ -28,9 +31,13 @@ const Menue = () => {
       {/* Offered */}
       <MenuCategory items={offered}></MenuCategory>
       {/* Dessert */}
-      <MenuCategory coverImg={dessertImg} items={dessert} title={"Desert"}></MenuCategory>
-      <MenuCategory coverImg={pizzaImg} items={pizza} title={"Pizza"}></MenuCategory>
+      <MenuCategory coverImg={dessertImg} items={dessert} title={"desert"}></MenuCategory>
+      <MenuCategory coverImg={pizzaImg} items={pizza} title={"pizza"}></MenuCategory>
+      <MenuCategory coverImg={saladImg} items={salad} title={"salad"}></MenuCategory>
+      <MenuCategory coverImg={soupImg} items={soup} title={"soup"}></MenuCategory>
+      <MenuCategory coverImg={offeredImg} items={offered} title={"offered"}></MenuCategory>
     </div>
+    
   );
 };
 

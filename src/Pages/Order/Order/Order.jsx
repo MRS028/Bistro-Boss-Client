@@ -3,29 +3,31 @@ import orderCover from "../../../assets/assets/shop/banner2.jpg";
 import Cover from "../../Shared/Cover/Cover";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import useMenu from "../../../Hooks/usemenu";
+
 import FoodCard from "../../../Components/FoodCard/FoodCard";
 import OrderTab from "../OrderTab/OrderTab";
 import { BiDrink } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useMenu from "../../../Hooks/usemenu";
 
 const Order = () => {
-  const categories = ["salad", "pizza", "soup", "dessert", "drinks"];
+  const categories = ["salad", "pizza", "soup", "dessert", "drinks","offered"];
   const { category } = useParams();
   const initialIndex = categories.indexOf(category);
-
   const [tabIndex, setTabIndex] = useState(initialIndex);
   const [menu] = useMenu();
+
+  // console.log(menu);
 
   // console.log(category)
   const dessert = menu.filter((item) => item.category === "dessert");
   const soup = menu.filter((item) => item.category === "soup");
   const salad = menu.filter((item) => item.category === "salad");
   const pizza = menu.filter((item) => item.category === "pizza");
-  //   const offered = menu.filter((item) => item.category === "offered");
+  const offered = menu.filter((item) => item.category === "offered");
   const Drinks = menu.filter((item) => item.category === "drinks");
-  //   console.log(salad, dessert, pizza, offered);
+  // console.log(salad, dessert, pizza, offered);
 
   return (
     <div>
@@ -34,7 +36,7 @@ const Order = () => {
         <link rel="canonical" href="https://www.tacobell.com/" />
       </Helmet>
       <Cover img={orderCover} title={"Order Food"} />
-      <div className="flex justify-center">
+      <div className="flex justify-center overflow-hidden">
         <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList>
             <Tab>SALAD</Tab>
@@ -42,9 +44,15 @@ const Order = () => {
             <Tab>SOUP</Tab>
             <Tab>DESSERT</Tab>
             <Tab>DRINKS</Tab>
-            {/* <Tab>Offered</Tab> */}
+            <Tab>Offered</Tab>
           </TabList>
           <TabPanel>
+            {/* <div className="grid md:grid-cols-3 gap-10">
+              {salad.map((item) => (
+                <FoodCard key={item._id} item={item}></FoodCard>
+              ))}
+            </div> */}
+
             <OrderTab items={salad}></OrderTab>
           </TabPanel>
           <TabPanel>
@@ -59,7 +67,9 @@ const Order = () => {
           <TabPanel>
             <OrderTab items={Drinks}></OrderTab>
           </TabPanel>
-          {/* <TabPanel><OrderTab items={offered}></OrderTab></TabPanel> */}
+          <TabPanel>
+            <OrderTab items={offered}></OrderTab>
+          </TabPanel>
         </Tabs>
       </div>
     </div>

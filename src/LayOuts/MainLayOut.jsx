@@ -1,22 +1,24 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const MainLayOut = () => {
+  const location = useLocation();
+  // console.log(location);
+  const noHeaderfooter = location.pathname.includes("login") || location.pathname.includes("signup");
   return (
-    <div>
-      <div className="w-11/12 mx-auto">
-      <Navbar></Navbar>
-      </div>
-      
-      
+    <section>
+      {noHeaderfooter || (
+        <div className=" ">
+          <Navbar></Navbar>
+        </div>
+      )}
+
       <Outlet></Outlet>
-      
-      
-      
-      <Footer></Footer>
-    </div>
+
+      {noHeaderfooter || <Footer></Footer>}
+    </section>
   );
 };
 

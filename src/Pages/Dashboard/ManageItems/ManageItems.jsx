@@ -1,15 +1,16 @@
 import React from "react";
-import useCart from "../../../Hooks/useCart";
-import { FaTrash } from "react-icons/fa";
-import Swal from "sweetalert2";
+import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import useMenu from "../../../Hooks/usemenu";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
-const Cart = () => {
-  const [cart, refetch] = useCart();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+const ManageItems = () => {
+  const [menu, loading, refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
-
-  const handleDelete = (id) => {
+  const handleDelete = (item) => {
+    // console.log(item);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -18,31 +19,31 @@ const Cart = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/carts/${id}`).then((res) => {
-          if (res.data?.deletedCount) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-              timer: 1500,
-            });
-          }
-        });
+        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        // console.log(res.data);
+        if (res.data?.deletedCount) {
+          refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+            timer: 1500,
+          });
+        }
       }
     });
   };
+//   const handleUpdate = (item) => {};
 
   return (
     <div>
-      <div className="flex justify-evenly my-10">
-        <h2 className="lg:text-6xl">Items: {cart?.length}</h2>
-        <h2 className="lg:text-6xl">Total Price: {totalPrice}</h2>
-        <button className="btn btn-neutral">Pay</button>
-      </div>
-      <div className="overflow-x-auto mx-2">
+      <SectionTitle
+        heading={"Manage All Items"}
+        subHeading={"Hurry Up"}
+      ></SectionTitle>
+      <div className="overflow-x-auto mx-5">
         <table className="table">
           {/* head */}
           <thead>
@@ -51,11 +52,11 @@ const Cart = () => {
               <th>Image</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Action</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            {cart.map((item, index) => (
+            {menu.map((item, index) => (
               <tr key={item._id}>
                 <th>{index + 1}</th>
                 <td>
@@ -72,14 +73,23 @@ const Cart = () => {
                 </td>
                 <td className="font-bold">{item.name}</td>
                 <td className="font-bold">{item.price}</td>
-                <th>
+                <td className="flex justify-center">
+                  <Link to={`/dashboard/updateItem/${item._id}`}>
+                    <button
+                    //   onClick={() => handleUpdate(item._id)}
+                      className="btn btn-ghost btn-lg"
+                    >
+                      <FaEdit></FaEdit>
+                    </button>
+                  </Link>
+
                   <button
-                    onClick={() => handleDelete(item._id)}
+                    onClick={() => handleDelete(item)}
                     className="btn btn-ghost btn-lg"
                   >
                     <FaTrash className="text-red-600" size={16} />
                   </button>
-                </th>
+                </td>
               </tr>
             ))}
             {/* row 1 */}
@@ -91,4 +101,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default ManageItems;

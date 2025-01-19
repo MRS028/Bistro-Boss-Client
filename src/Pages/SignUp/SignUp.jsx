@@ -11,6 +11,8 @@ import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { BiPhotoAlbum } from "react-icons/bi";
 import Swal from "sweetalert2";
+import SocialLogin from "../../Components/Social Login/SocialLogin";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
   const {
@@ -19,7 +21,8 @@ const SignUp = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser,updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -27,21 +30,41 @@ const SignUp = () => {
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
-      updateUserProfile(data?.username,data?.photoURL)
-      .then(result=>{
-        console.log("User Profile info updated");
-        reset();
-        Swal.fire({
-                position: "top",
-                icon: "success",
-                title: "Login Success",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              navigate('/')
-
-      }).catch(err=>console.log(err))
+    
+      updateUserProfile(data?.name, data?.photoURL)
+        .then(() => {
+          
+          const userInfo = {
+            name: data.name, // Include name field
+            email: data.email,
+            photoURL: data.photoURL, // Include photoURL field
+          };
+          console.log(userInfo)
+    
+          axiosPublic
+            .post("/users", userInfo)
+            .then((res) => {
+              console.log(res.data);
+    
+              if (res.data.insertedId) {
+                console.log("User added to the database");
+                reset();
+                Swal.fire({
+                  position: "top",
+                  icon: "success",
+                  title: "Sign Up Successful",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+    
+                navigate("/");
+              }
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
     });
+    
   };
 
   // const captchaRef = useRef(null);
@@ -82,44 +105,44 @@ const SignUp = () => {
               Sign Up
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {/* Username Field */}
+              {/* name Field */}
               <div className="form-control">
                 <label
-                  htmlFor="username"
+                  htmlFor="name"
                   className="label text-gray-600 font-medium"
                 >
-                  Username
+                  name
                 </label>
                 <div className="relative">
                   <FaUserAlt className="absolute top-4 left-3 text-gray-400" />
                   <input
                     type="text"
-                    id="username"
-                    {...register("username", { required: true })}
-                    placeholder="Enter your username"
+                    id="name"
+                    {...register("name", { required: true })}
+                    placeholder="Enter your name"
                     className="input input-bordered w-full pl-10"
                   />
                 </div>
-                {errors.username && (
-                  <p className="text-red-500 text-sm">Username is required</p>
+                {errors.name && (
+                  <p className="text-red-500 text-sm">name is required</p>
                 )}
               </div>
               {/* PhotURl */}
               <div className="form-control">
                 <label
-                  htmlFor="username"
+                  htmlFor="name"
                   className="label text-gray-600 font-medium"
                 >
                   PhotoURL
                 </label>
                 <div className="relative">
                   <BiPhotoAlbum className="absolute top-4 left-3 text-gray-400"></BiPhotoAlbum>
-                  
+
                   <input
                     type="text"
-                    id="username"
+                    id="name"
                     {...register("photoURL", { required: true })}
-                    placeholder="Enter your username"
+                    placeholder="Enter your name"
                     className="input input-bordered w-full pl-10"
                   />
                 </div>
@@ -202,12 +225,12 @@ const SignUp = () => {
                   <LoadCanvasTemplate />
                 </label>
                 <input
-                onBlur={handleValidateCaptcha}
+                  // onBlur={handleValidateCaptcha}
                   // ref={captchaRef}
                   type="text"
                   placeholder="Type the Captcha"
                   className="input input-bordered w-full"
-                  required
+                  // required
                 />
                 {/* <button
                   type="button"
@@ -221,7 +244,7 @@ const SignUp = () => {
               {/* Submit Button */}
               <div className="form-control">
                 <input
-                  disabled={disable}
+                  // disabled={disable}
                   type="submit"
                   className="btn btn-primary w-full"
                   value="Sign Up"
@@ -235,6 +258,10 @@ const SignUp = () => {
                 Log in
               </Link>
             </p>
+            <div className="divider">X</div>
+            <div className="mt-5">
+              <SocialLogin></SocialLogin>
+            </div>
           </div>
         </div>
       </div>

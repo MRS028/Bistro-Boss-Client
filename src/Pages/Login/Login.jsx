@@ -9,6 +9,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../Components/Social Login/SocialLogin";
 
 const Login = () => {
   // const captchaRef = useRef(null);
@@ -133,7 +134,12 @@ const Login = () => {
                   SignUp
                 </Link>
               </p>
+              <div className="divider">Or</div>
             </form>
+            <div>
+              <p className="text-sm text-center font-semibold">Sign In With</p>
+            <SocialLogin></SocialLogin>
+            </div>
           </div>
         </div>
       </div>
